@@ -48,23 +48,29 @@ Supported Social Networks
 OneAll Social Login for Drupal currently supports the following social 
 networks and identity providers:
 
-- Facebook
-- Twitter
-- LinkedIn
-- Google
-- Yahoo
-- Paypal
-- Github.com
-- Skyrock.com
-- LiveJournal
-- Hyves
-- YouTube
-- OpenID
+- Amazon
 - Blogger
-- Windows Live
-- StackExchange
-- WordPress.com
-- Steam Community
-- Odnoklassniki
+- Disqus
+- Facebook
+- Foursquare
+- Github.com
+- Google
+- Instagram
+- LinkedIn'
+- LiveJournal
 - Mail.ru
-- Vk.com
+- Odnoklassniki
+- OpenID
+- PayPal
+- Reddit
+- Skyrock.com		
+- StackExchange
+- Steam
+- Twitch.tv
+- Twitter
+- Vimeo
+- VKontakte
+- Windows Live
+- WordPress.com
+- Yahoo
+- YouTube

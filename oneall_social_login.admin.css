@@ -14,7 +14,7 @@ div.messages.oneall_social_login {
   width: 35px;
 }
 
-.oneall_social_login_provider.oneall_social_login_provider_aol {
+.oneall_social_login_provider.oneall_social_login_provider_vimeo {
   background-position: -2px -1px;
 }
 
@@ -34,7 +34,7 @@ div.messages.oneall_social_login {
   background-position: -150px -1px;
 }
 
-.oneall_social_login_provider.oneall_social_login_provider_hyves {
+.oneall_social_login_provider.oneall_social_login_provider_reddit {
   background-position: -187px -1px;
 }
 
@@ -98,10 +98,30 @@ div.messages.oneall_social_login {
   background-position: -927px -1px;
 }
 
+.oneall_social_login_provider.oneall_social_login_provider_disqus {
+  background-position: -964px -1px;
+}
+
 .oneall_social_login_provider.oneall_social_login_provider_youtube {
   background-position: -1001px -1px;
 }
 
 .oneall_social_login_provider.oneall_social_login_provider_odnoklassniki {
   background-position: -1038px -1px;
+}
+
+.oneall_social_login_provider.oneall_social_login_provider_deviantart {
+  background-position: -1075px -1px;
+}
+
+.oneall_social_login_provider.oneall_social_login_provider_twitch {
+  background-position: -1112px -1px;
+}
+
+.oneall_social_login_provider.oneall_social_login_provider_amazon {
+  background-position: -1149px -1px;
+}
+
+.oneall_social_login_provider.oneall_social_login_provider_instagram {
+  background-position: -1186px -1px;
 }
