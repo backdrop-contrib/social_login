@@ -8,7 +8,7 @@
 /**
  * Implements hook_schema().
  */
-function oneall_social_login_core_schema() {
+function social_login_core_schema() {
 
   // Used to link social network profiles to authmap entries.
   $schema['oneall_social_login_identities'] = array(
@@ -99,7 +99,7 @@ function oneall_social_login_core_schema() {
 /**
  * Implements hook_install().
  */
-function oneall_social_login_core_install() {
+function social_login_core_install() {
 
   // Start transaction.
   $db_transaction = db_transaction();
@@ -117,12 +117,12 @@ function oneall_social_login_core_install() {
 /**
  * Implements hook_uninstall().
  */
-function oneall_social_login_core_uninstall() {
+function social_login_core_uninstall() {
 
   // Drop tables.
   drupal_uninstall_schema('oneall_social_login_identities');
   drupal_uninstall_schema('oneall_social_login_settings');
 
   // Remove entries that the module might have created.
-  db_delete('authmap')->condition('module', 'oneall_social_login')->execute();
+  db_delete('authmap')->condition('module', 'social_login')->execute();
 }
