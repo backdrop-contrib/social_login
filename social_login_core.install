@@ -124,5 +124,5 @@ function social_login_core_uninstall() {
   drupal_uninstall_schema('oneall_social_login_settings');
 
   // Remove entries that the module might have created.
-  db_delete('authmap')->condition('module', 'social_login')->execute();
+  db_delete('authmap')->condition('module', 'oneall_social_login')->execute();
 }
