@@ -15,7 +15,7 @@ function social_login_widget_get_js_library($subdomain, $https_enabled = FALSE) 
 /**
  * Builds the code for the social network buttons and returns it as string.
  */
-function social_login_widget_get_js_plugin($plugin_type, $subdomain, $providers, $containerid, $token = NULL) {
+function social_login_widget_get_js_plugin($plugin_type, $subdomain, $providers, $containerid, $user_token = '') {
   global $is_https, $base_url;
 
   // Check required settings.
@@ -27,13 +27,20 @@ function social_login_widget_get_js_plugin($plugin_type, $subdomain, $providers,
 
     // Build Javascript.
     $js = array();
-    $js[] = "oneall.api.plugins." . $plugin_type . ".build(\"" . $containerid . "\", {";
-    $js[] = " 'providers' : ['" . implode("','", $providers) . "'],";
-    $js[] = " 'callback_uri': '" . $callback_uri . "', ";
-    $js[] = " 'force_reauth' : " . ($plugin_type == 'social_link' ? 'true' : 'false') . ", ";
-    $js[] = " 'user_token': '" . (!empty($token) ? $token : '') . "', ";
-    $js[] = " 'css_theme_uri' : '" . (($is_https ? 'https://secure.' : ' http://public.') . 'oneallcdn.com/css/api/socialize/themes/drupal/default.css') . "' ";
-    $js[] = "}); <!-- OneAll.com / " . ucwords(str_replace("_", " ", $plugin_type)) . " for Drupal -->";
+    $js[] = "var _oneall = _oneall || [];";
+    $js[] = "_oneall.push(['". $plugin_type ."', 'set_providers', ['". implode("','", $providers) . "']]);";
+    $js[] = "_oneall.push(['". $plugin_type ."', 'set_callback_uri', '". $callback_uri ."']);";  
+    
+    if ($plugin_type == 'social_link') {
+      $js[] = "_oneall.push(['". $plugin_type ."', 'set_force_re_authentication', true]);";
+      
+      if ( ! empty ($user_token)) {
+        $js[] = "_oneall.push(['". $plugin_type ."', 'set_user_token', '". $user_token ."']);";
+      }
+    }
+    
+    $js[] = "_oneall.push(['". $plugin_type ."', 'do_render_ui', '". $containerid ."']);";
+    $js[] = "<!-- OneAll.com / Social Login for Drupal -->";
     $js = implode("\n", $js);
 
     return $js;
