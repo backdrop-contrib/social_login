@@ -6,7 +6,14 @@
 
 function social_login_get_user_agent () {
 	$oa_core_info = drupal_parse_info_file(drupal_get_path('module', 'social_login_core') . '/social_login_core.info');
-	$oa_core_info_version = str_replace(array('-', '_', ':'), '.', $oa_core_info['version']);
+	
+	// If there is no version, then the module if not from drupal.org.
+	if (empty ($oa_core_info['version'])) {
+		$oa_core_info_version = '1.9';
+	} else {
+		$oa_core_info_version = str_replace(array('-', '_', ':'), '.', $oa_core_info['version']);
+	}	
+	
 	return 'SocialLogin/' . $oa_core_info_version . ' Drupal/' . $oa_core_info['core'] . ' (+http://www.oneall.com/)';
 }
 
