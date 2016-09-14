@@ -139,8 +139,7 @@ function social_login_core_do_api_request($handler, $url, $options = array(), $t
   }
   // CURL?
   else {
-
-    // Open_basedir is set or safe_mode is on, CURL may not follow urls.
+    // Open_basedir is set or safe_mode is on, CURL cannot follow urls.
     if (drupal_strlen(trim(ini_get('open_basedir'))) > 0 || in_array(drupal_strtolower(ini_get('safe_mode')), array('on', 1))) {
       $allow_follow_location = FALSE;
     }
