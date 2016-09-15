@@ -79,7 +79,7 @@ function social_login_core_schema() {
       'value' => array(
         'description' => 'The value of the setting.',
         'type' => 'varchar',
-        'length' => '64',
+        'length' => '255',
         'not null' => TRUE,
       ),
     ),
