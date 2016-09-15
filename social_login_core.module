@@ -4,6 +4,42 @@
  * @file
  * Contains the core functions used by the OneAll Social Login Module.
  */
+
+/**
+ * Calls the triggers for a given hook.
+ */
+function social_login_call_triggers($hook) {
+
+  // Retrieve triggers
+  $aids = trigger_get_assigned_actions ($hook);
+  
+  // Any triggers found?
+  if (is_array ($aids)) {
+    $context = array(
+      'hook' => $hook
+    );
+
+    // We need to get the expected object if the action's type is not 'node'.
+    foreach ($aids as $aid => $info) {
+      $type = $info['type'];
+      if ($type != 'node') {
+        if (!isset($objects[$type])) {
+          $objects[$type] = _trigger_normalize_node_context($type, $node);
+        }
+        // Since we know about the node, we pass that info along to the action.
+        $context['node'] = $node;
+        $result = actions_do($aid, $objects[$type], $context);
+      }
+      else {
+        actions_do($aid, $node, $context);
+      }
+    }
+  }
+}
+
+/**
+ * Build the user agent used by our HTTP calls.
+ */
 function social_login_get_user_agent() {
   $oa_core_info = drupal_parse_info_file(drupal_get_path('module', 'social_login_core') . '/social_login_core.info');
   
@@ -12,11 +48,7 @@ function social_login_get_user_agent() {
     $oa_core_info_version = '1.9';
   }
   else {
-    $oa_core_info_version = str_replace(array(
-      '-',
-      '_',
-      ':' 
-    ), '.', $oa_core_info['version']);
+    $oa_core_info_version = str_replace(array('-', '_', ':'), '.', $oa_core_info['version']);
   }
   
   return 'SocialLogin/' . $oa_core_info_version . ' Drupal/' . $oa_core_info['core'] . ' (+http://www.oneall.com/)';
@@ -303,18 +335,27 @@ function social_login_core_callback_handler() {
               // Make sure this social login user has confirmed his email, if necessary:
               if (!empty($user_for_token->data['social_login_email_to_confirm'])) {
                 drupal_set_message(t('Please follow the activation link of the welcome message which has been sent to your e-mail address.'), 'warning');
+                
+                // Clear Session
+                social_login_core_clear_session();
               }
               else {
                 // Make sure that the user has not been blocked.
                 $state['values']['name'] = $user_for_token->name;
                 user_login_name_validate(array(), $state);
                 if (!form_get_errors()) {
+                  
                   // Login user.
                   $form_state['uid'] = $user_for_token->uid;
                   user_login_submit(array(), $form_state);
+                  
+                  // Clear Session
+                  social_login_core_clear_session();
+                  
+                  // Call Triggers.
+                  social_login_call_triggers ('user_login');                                   
                 }
-              }
-              social_login_core_clear_session();
+              }       
             }
             // Social Link : Existing User.
             elseif ($data['plugin']['key'] == 'social_link') {
@@ -544,7 +585,7 @@ function social_login_core_callback_handler() {
                       // Grab the social avatar and link it to the user account.
                       social_login_core_link_social_network_avatar($social_data, $account);
                     }
-                    
+
                     // Log the new user in.
                     if (($uid = user_authenticate($user_login, $user_password)) !== FALSE) {
                       global $user;
