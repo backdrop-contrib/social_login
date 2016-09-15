@@ -1,8 +1,8 @@
 <?php
+
 /**
  * @file
- * On Install: creates the tables required by the OneAll Social Login module.
- * On UnInstall: removes the previously created tables.
+ * Creates/removes the tables required by the OneAll Social Login module.
  */
 
 /**
