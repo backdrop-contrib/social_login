@@ -32,7 +32,7 @@ function social_login_widget_is_https_on () {
         }
 
         if (! empty ($_SERVER ['HTTPS'])) {
-            if (strtolower (trim ($_SERVER ['HTTPS'])) == 'on' || trim ($_SERVER ['HTTPS']) == '1') {
+            if (stristr($_SERVER['HTTPS'], 'off') === false) {
                 return true;
             }
         }
