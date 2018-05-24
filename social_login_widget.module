@@ -243,7 +243,7 @@ function social_login_widget_show_providers(&$form, &$form_state, $target) {
       // Do not show if disabled by admin.
       if ($settings['side_panel_icons'] <> 'disable') {
         $widget_enabled = TRUE;
-        $title = $settings['side_panel_caption'];
+        $title = t($settings['side_panel_caption']);
         $position = ($settings['side_panel_icons'] == 'below' ? 100 : (-100));
       }
       break;
@@ -257,7 +257,7 @@ function social_login_widget_show_providers(&$form, &$form_state, $target) {
         // Do not show if disabled by admin.
         if ($settings['registration_page_icons'] <> 'disable') {
           $widget_enabled = TRUE;
-          $title = $settings['registration_page_caption'];
+          $title = t($settings['registration_page_caption']);
           $position = ($settings['registration_page_icons'] == 'below' ? 100 : (-100));
         }
       }
@@ -280,7 +280,7 @@ function social_login_widget_show_providers(&$form, &$form_state, $target) {
         // Do not show if disabled by admin.
         if ($settings['login_page_icons'] <> 'disable') {
           $widget_enabled = TRUE;
-          $title = $settings['login_page_caption'];
+          $title = t($settings['login_page_caption']);
           $position = ($settings['login_page_icons'] == 'above' ? -100 : 100);
         }
       }
@@ -289,6 +289,7 @@ function social_login_widget_show_providers(&$form, &$form_state, $target) {
     // Edit Profile Page.
     case 'edit_profile_page':
       if ($settings['profile_page_icons'] <> 'disable') {
+
         // Needed to retrieve his token.
         global $user;
 
@@ -305,7 +306,7 @@ function social_login_widget_show_providers(&$form, &$form_state, $target) {
         $widget_in_fieldset = TRUE;
 
         // Title.
-        $title = $settings['profile_page_caption'];
+        $title = t($settings['profile_page_caption']);
 
         // Display on top.
         $position = ($settings['profile_page_icons'] == 'above' ? -100 : 100);
@@ -333,7 +334,7 @@ function social_login_widget_show_providers(&$form, &$form_state, $target) {
     // Container to add the buttons to.
     $containerid = 'social_login_providers_' . rand(99999, 9999999);
 
-    // Icon Block
+    // Icon block.
     $social_login_block =  theme('html_tag', array('element' => array(
     	'#tag' => 'script',
     	'#value_prefix' => "\n<!--//--><![CDATA[//><!--\n",
