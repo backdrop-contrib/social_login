@@ -54,12 +54,12 @@ function social_login_widget_get_js_plugin($plugin_type, $subdomain, $providers,
   // Check required settings.
   if (!empty($containerid) AND !empty($subdomain)) {
 
-  	// We cannot redirect to a page build using Ajax.
-  	if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-  		$origin = $base_url;
-  	} else {
-  		$origin = social_login_get_current_url($use_https);
-  	}
+    // We cannot redirect to a page build using Ajax.
+    if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+      $origin = $base_url;
+    } else {
+      $origin = social_login_get_current_url($use_https);
+    }
 
     // Build the callback uri.
     $callback_uri = url('social_login/callback', array('absolute' => TRUE, 'query' => array ('origin' => $origin)));
@@ -80,7 +80,7 @@ function social_login_widget_get_js_plugin($plugin_type, $subdomain, $providers,
     }
 
     $js[] = "_oneall.push(['". $plugin_type ."', 'do_render_ui', '". $containerid ."']);";
-    $js[] = "<!-- OneAll.com / Social Login for Drupal -->";
+    $js[] = "<!-- OneAll.com / Social Login for Backdrop -->";
     $js = implode("\n", $js);
 
     return $js;
@@ -263,11 +263,11 @@ function social_login_widget_show_providers(&$form, &$form_state, $target) {
       }
       // Hide only once.
       else if (isset($_SESSION['social_login_session_open'])) {
-      	/* $_SESSION['social_login_session_open'] === 1
-      	 * Assignment below prevents the SESSION to be displayed in future registration form (preventing registration)
-      	 * and displays the provider icons again (the if condition above).
-      	 */
-      	$_SESSION['social_login_session_open'] = 0;
+        /* $_SESSION['social_login_session_open'] === 1
+         * Assignment below prevents the SESSION to be displayed in future registration form (preventing registration)
+         * and displays the provider icons again (the if condition above).
+         */
+        $_SESSION['social_login_session_open'] = 0;
       }
       break;
 
@@ -336,13 +336,13 @@ function social_login_widget_show_providers(&$form, &$form_state, $target) {
 
     // Icon block.
     $social_login_block =  theme('html_tag', array('element' => array(
-    	'#tag' => 'script',
-    	'#value_prefix' => "\n<!--//--><![CDATA[//><!--\n",
-    	'#value' => social_login_widget_get_js_plugin($plugin_type, $settings['api_subdomain'], $settings['enabled_providers'], $containerid, $user_token),
-    	'#value_suffix' => "\n//--><!]]>\n",
-    	'#attributes' => array(
-    		'type' => 'text/javascript',
-    	)
+      '#tag' => 'script',
+      '#value_prefix' => "\n<!--//--><![CDATA[//><!--\n",
+      '#value' => social_login_widget_get_js_plugin($plugin_type, $settings['api_subdomain'], $settings['enabled_providers'], $containerid, $user_token),
+      '#value_suffix' => "\n//--><!]]>\n",
+      '#attributes' => array(
+        'type' => 'text/javascript',
+      )
      )));
 
     // Show in fieldset.
@@ -356,14 +356,14 @@ function social_login_widget_show_providers(&$form, &$form_state, $target) {
 
       $form['social_login_' . $containerid]['inner_block'] = array(
         '#prefix' => theme('social_login_widget_provider_container', array('containerid' => $containerid, 'label' => '')),
-      	'#suffix' => $social_login_block,
+        '#suffix' => $social_login_block,
       );
     }
     else {
 
       $form['social_login_' . $containerid] = array(
         '#prefix' => theme('social_login_widget_provider_container', array('containerid' => $containerid, 'label' => $title)),
-      	'#suffix' => $social_login_block,
+        '#suffix' => $social_login_block,
         '#weight' => $position,
       );
     }
@@ -389,7 +389,7 @@ function social_login_widget_theme() {
   return array(
     'social_login_widget_provider_container' => array(
       'template' => 'provider_container',
-      'path' => drupal_get_path('module', 'social_login_widget') . '/theme',
+      'path' => backdrop_get_path('module', 'social_login_widget') . '/theme',
       'variables' => array(
         'containerid' => NULL,
         'label' => NULL,
@@ -397,7 +397,7 @@ function social_login_widget_theme() {
     ),
     'social_login_widget_provider_container_block' => array(
       'template' => 'block_provider_container',
-      'path' => drupal_get_path('module', 'social_login_widget') . '/theme',
+      'path' => backdrop_get_path('module', 'social_login_widget') . '/theme',
       'variables' => array(
         'containerid' => NULL,
       ),
@@ -445,8 +445,8 @@ function social_login_widget_get_settings() {
   $results = db_query("SELECT setting, value FROM {oneall_social_login_settings}");
   foreach ($results as $result) {
     $settings[$result->setting] = $result->value;
-    if (drupal_substr($result->setting, 0, 8) == 'provider' && !empty($result->value)) {
-      $settings['enabled_providers'][] = drupal_substr($result->setting, 9, drupal_strlen($result->setting));
+    if (backdrop_substr($result->setting, 0, 8) == 'provider' && !empty($result->value)) {
+      $settings['enabled_providers'][] = backdrop_substr($result->setting, 9, backdrop_strlen($result->setting));
     }
   }
   return $settings;
