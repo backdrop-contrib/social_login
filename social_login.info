@@ -1,7 +1,8 @@
 name = "OneAll Social Login, Interface"
 description = Allows your users to register and login with 30+ social networks like for example Twitter, Facebook, Paypal, LinkedIn, Instagram, Vimeo, Google and Yahoo
 package = "OneAll Social Login"
-core = 1.x
+backdrop = 1.x
+version = 1.x-1.x
 type = module
 configure = admin/config/people/social_login
 dependencies[] = "social_login_core"
