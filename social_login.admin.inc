@@ -11,7 +11,7 @@
 function social_login_admin_settings($form, &$form_state) {
 
   // Used to display the provider icons.
-  drupal_add_css(drupal_get_path('module', 'social_login') . '/social_login.admin.css');
+  backdrop_add_css(backdrop_get_path('module', 'social_login') . '/social_login.admin.css');
 
   // Read Settings.
   $settings = social_login_core_get_settings();
@@ -43,7 +43,7 @@ function social_login_admin_settings($form, &$form_state) {
     )),
     '#options' => array(
       'curl' => t('PHP cURL library'),
-      'fsockopen' => t('PHP fsockopen through drupal_http_request()'),
+      'fsockopen' => t('PHP fsockopen through backdrop_http_request()'),
     ),
     '#default_value' => $default,
   );
@@ -273,7 +273,7 @@ function social_login_admin_settings($form, &$form_state) {
     '#title' => t('Do user that register with Social Login have to be approved by an administrator?'),
     '#description' => t('Manual approval should not be required as Social Login eliminates SPAM issues almost entirely.'),
     '#options' => array(
-      'inherit' => t('Use the system-wide setting from the Drupal account settings (Default)'),
+      'inherit' => t('Use the system-wide setting from the Backdrop account settings (Default)'),
       'disable' => t('Automatically approve users that register with Social Login'),
       'enable' => t(' Always require administrators to approve users that register with Social Login'),
     ),
@@ -394,14 +394,14 @@ function social_login_admin_ajax_api_connection_autodetect($form, &$form_state) 
   if (!empty($http_handler)) {
     $form['social_login_api_connection']['http_handler']['#value'] = $http_handler;
     $form['social_login_api_connection']['http_protocol']['#value'] = $http_protocol;
-    drupal_set_message(t('Autodetected @handler on port @port - do not forget to save your changes!', array(
+    backdrop_set_message(t('Autodetected @handler on port @port - do not forget to save your changes!', array(
       '@handler' => ($http_handler == 'curl' ? 'PHP cURL' : 'PHP fsockopen'),
       '@port' => ($http_protocol == 'http' ? '80/HTTP' : '443/HTTPS'),
     )), 'status social_login');
   }
   // Nothing works.
   else {
-    drupal_set_message(t('Sorry, but the autodetection failed. Please try to open port 80/443 for outbound requests and install PHP cURL/fsockopen.'), 'error social_login');
+    backdrop_set_message(t('Sorry, but the autodetection failed. Please try to open port 80/443 for outbound requests and install PHP cURL/fsockopen.'), 'error social_login');
   }
   return $form['social_login_api_connection'];
 }
@@ -412,7 +412,7 @@ function social_login_admin_ajax_api_connection_autodetect($form, &$form_state) 
 function social_login_admin_ajax_check_api_connection_settings($form, &$form_state) {
 
   // Sanitize data.
-  $api_subdomain = (isset($form_state['values']['api_subdomain']) ? trim(drupal_strtolower($form_state['values']['api_subdomain'])) : '');
+  $api_subdomain = (isset($form_state['values']['api_subdomain']) ? trim(backdrop_strtolower($form_state['values']['api_subdomain'])) : '');
   $api_key = (isset($form_state['values']) ? trim($form_state['values']['api_key']) : '');
   $api_secret = (isset($form_state['values']) ? trim($form_state['values']['api_secret']) : '');
 
@@ -481,10 +481,10 @@ function social_login_admin_ajax_check_api_connection_settings($form, &$form_sta
 
   // Error.
   if (!empty($success_message)) {
-    drupal_set_message($success_message, 'status social_login');
+    backdrop_set_message($success_message, 'status social_login');
   }
   else {
-    drupal_set_message($error_message, 'error social_login');
+    backdrop_set_message($error_message, 'error social_login');
   }
   return $form['social_login_api_settings'];
 }
@@ -494,7 +494,7 @@ function social_login_admin_ajax_check_api_connection_settings($form, &$form_sta
  */
 function social_login_admin_settings_submit($form, &$form_state) {
 
-  // Remove Drupal stuff.
+  // Remove Backdrop stuff.
   form_state_values_clean($form_state);
 
   // Save values.
@@ -505,7 +505,7 @@ function social_login_admin_settings_submit($form, &$form_state) {
     // API Subdomain.
     if ($setting == 'api_subdomain') {
       // The subdomain is always in lower-case
-      $value = drupal_strtolower($value);
+      $value = backdrop_strtolower($value);
 
       // Wrapper for full domains.
       if (preg_match("/([a-z0-9\-]+)\.api\.oneall\.com/i", $value, $matches)) {
@@ -521,7 +521,7 @@ function social_login_admin_settings_submit($form, &$form_state) {
       db_insert('oneall_social_login_settings')->fields(array('setting' => $setting, 'value' => $value))->execute();
     }
   }
-  drupal_set_message(t('Settings saved successfully'), 'status social_login');
+  backdrop_set_message(t('Settings saved successfully'), 'status social_login');
   cache_clear_all();
   menu_rebuild();
 }
