@@ -213,7 +213,7 @@ function social_login_widget_form_alter(&$form, &$form_state) {
  * Implements hook_form_USER_LOGIN_BLOCK_alter().
  */
 function social_login_widget_form_user_login_block_alter(&$form, &$form_state) {
-  social_login_widget_show_providers($form, $form_state, 'side_panel');
+  social_login_widget_show_providers($form, $form_state, 'login_page');
 }
 
 

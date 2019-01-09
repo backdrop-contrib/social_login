@@ -672,7 +672,8 @@ function social_login_core_callback_handler() {
 /**
  * Implements hook_user_insert().
  */
-function social_login_core_user_insert(&$edit, $account, $category) {
+// function social_login_core_user_insert(&$edit, $account, $category) {
+function social_login_core_user_insert($account) {
   // Check if we come from a valid session.
   if (isset($_SESSION) && !empty($_SESSION['social_login_social_data'])) {
     // Restore data.
