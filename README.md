@@ -5,7 +5,7 @@ Description
 -----------
 
 Professionally developed and free Backdrop module that allows your users to
-register and login to your Backcdrop website with their existing social network
+register and login to your Backdrop website with their existing social network
 account (Twitter, Facebook, LinkedIn, Google ...)
 
 Your existing users can furthermore link their regular account to one or more
@@ -104,7 +104,7 @@ http://www.oneall.com/company/contact-us/
 Maintainers
 -----------
 
-(Geoff St. Pierre @serundeputy)[https://github.com/serundeputy]
+[Geoff St. Pierre @serundeputy](https://github.com/serundeputy)
 Seeking co-maintainer(s)
 
 Originally Written for Drupal
